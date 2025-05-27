@@ -14,10 +14,11 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*), /api/${segment}
 
-        - id: swagger-consumer-service
+        - id: swagger-for-consumer
           uri: lb://consumer-service
           predicates:
             - Path=/consumer-service/swagger-ui.html
+            - Path=/consumer-service/swagger-ui/**
             - Path=/consumer-service/v3/api-docs/**
           filters:
             - RewritePath=/consumer-service/(?<segment>.*), /${segment}
