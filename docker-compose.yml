@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   consul:
-    image: consul:latest
-    container_name: consul
+    image: consul:1.15.3
+    container_name: consulbek
     ports:
       - "8500:8500"    # Consul HTTP API & UI porti
       - "8600:8600/udp" # DNS porti (udp)
