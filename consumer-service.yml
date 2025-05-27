@@ -4,14 +4,6 @@ server:
 spring:
   application:
     name: consumer-service
-  datasource:
-    url: jdbc:postgresql://localhost:5432/consumerdb
-    username: microservice
-    password: microservice
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
 
   cloud:
     consul:
@@ -23,7 +15,14 @@ spring:
         register: true
         health-check-path: /actuator/health
         health-check-interval: 10s
-
+  datasource:
+    url: jdbc:postgresql://localhost:5432/consumerdb
+    username: microservice
+    password: microservice
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 management:
   endpoints:
     web:
