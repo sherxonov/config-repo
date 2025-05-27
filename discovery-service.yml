@@ -5,13 +5,16 @@ spring:
   application:
     name: discovery-service
 
+  config:
+    import: optional:configserver:http://localhost:8888
+
   cloud:
     consul:
       host: localhost
       port: 8500
       discovery:
         service-name: discovery-service
-        instance-id: discovery-service-${spring.cloud.client.hostname}-${server.port}
+        instance-id: discovery-service-${spring.application.name}-${server.port}
         register: true
         health-check-path: /actuator/health
         health-check-interval: 10s
