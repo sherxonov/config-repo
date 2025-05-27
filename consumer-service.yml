@@ -1,15 +1,31 @@
+server:
+  port: 8081
+
 spring:
   application:
     name: consumer-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/consumerdb
+    url: jdbc:postgresql://localhost:5432/spring_security
     username: microservice
     password: microservice
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
-server:
-  port: 0
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: consumer-service
+        instance-id: consumer-service-${spring.application.name}-${server.port}
+        register: true
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
