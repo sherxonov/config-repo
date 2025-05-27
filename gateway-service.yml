@@ -28,6 +28,13 @@ spring:
     discovery:
       enabled: true
 
+springdoc:
+  swagger-ui:
+    urls:
+      - name: consumer-service
+        url: /consumer-service/v3/api-docs
+
+
 management:
   endpoints:
     web:
