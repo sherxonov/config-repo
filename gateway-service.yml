@@ -8,9 +8,9 @@ spring:
         - id: consumer-service
           uri: lb://consumer-service
           predicates:
-            - Path=/api/consumer/**
+            - Path=/api/**
           filters:
-            - RewritePath=/api/consumers/(?<segment>.*), /$\{segment}
+            - RewritePath=/api/(?<segment>.*), /api/${segment}
 
   application:
     name: gateway-service
