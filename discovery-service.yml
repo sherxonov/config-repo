@@ -11,7 +11,7 @@ spring:
       port: 8500
       discovery:
         service-name: discovery-service
-        instance-id: discovery-service-${spring.application.name}-${server.port}  # server.port va app.name bo'sh emasligiga ishonch hosil qiling
+        instance-id: discovery-service-instance-1
         register: true
         health-check-path: /actuator/health
         health-check-interval: 10s
