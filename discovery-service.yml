@@ -13,3 +13,9 @@ spring:
         register: true
         health-check-path: /actuator/health
         health-check-interval: 10s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
