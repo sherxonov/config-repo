@@ -1,5 +1,5 @@
 server:
-  port: 8012
+  port: 8090
 
 spring:
   cloud:
@@ -8,13 +8,16 @@ spring:
         - id: consumer-service
           uri: lb://consumer-service
           predicates:
-            - Path=/api/consumer/**
-        - id: payment-service
-          uri: lb://payment-service
-          predicates:
-            - Path=/api/payment/**
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8180/realms/microservice-realm
+            - Path=/api/consumers/**
+          filters:
+            - RewritePath=/api/consumers/(?<segment>.*), /$\{segment}
+
+  application:
+    name: gateway-service
+  consul:
+    host: localhost
+    port: 8500
+    discovery:
+      enabled: true
+
+
