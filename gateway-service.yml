@@ -8,7 +8,7 @@ spring:
         - id: consumer-service
           uri: lb://consumer-service
           predicates:
-            - Path=/api/consumers/**
+            - Path=/api/consumer/**
           filters:
             - RewritePath=/api/consumers/(?<segment>.*), /$\{segment}
 
