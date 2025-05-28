@@ -1,10 +1,40 @@
 version: '3.8'
 
 services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: your-password
+      POSTGRES_DB: keycloak
+    ports:
+      - "5455:5432"  # Tashqi 5455 → konteyner ichidagi 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   consul:
     image: consul:1.15.3
     container_name: consulbek
     ports:
-      - "8500:8500"    # Consul HTTP API & UI porti
-      - "8600:8600/udp" # DNS porti (udp)
-    command: agent -dev -client=0.0.0.0
+      - "8500:8500"
+    command: consul agent -dev -client=0.0.0.0
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.1
+    container_name: keycloak
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: your-password
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "9500:8080"  # Tashqi 9500 → konteyner ichidagi 8080 (Keycloak)
+    depends_on:
+      - postgres
+    command: start
+
+volumes:
+  postgres_data:
