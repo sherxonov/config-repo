@@ -1,14 +1,30 @@
+server:
+  port: 8014
+
 spring:
   application:
     name: spring-security-service
+
+  cloud:
+    consul:
+      discovery:
+        register: true
+        enabled: true
+
   datasource:
     url: jdbc:postgresql://localhost:5432/spring_security
     username: microservice
     password: microservice
+
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
 
-server:
-  port: 8014
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9500/realms/user-service
+
+
