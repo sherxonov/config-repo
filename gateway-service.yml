@@ -4,6 +4,7 @@ server:
 spring:
   application:
     name: gateway-service
+
   cloud:
     gateway:
       routes:
@@ -12,7 +13,7 @@ spring:
           predicates:
             - Path=/api/**
           filters:
-            - RewritePath=/api/(?<segment>.*), /api/${segment}
+            - RewritePath=/api/(?<segment>.*), /${segment}
 
         - id: swagger-for-consumer
           uri: lb://consumer-service
@@ -23,18 +24,35 @@ spring:
           filters:
             - RewritePath=/consumer-service/(?<segment>.*), /${segment}
 
+        - id: spring-security-service
+          uri: lb://spring-security-service
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - RewritePath=/api/users/(?<segment>.*), /api/users/${segment}
+
+      default-filters:
+        - TokenRelay=
+
+    discovery:
+      enabled: true
+      locator:
+        enabled: true
+        lower-case-service-id: true
+
   consul:
     host: localhost
     port: 8500
     discovery:
       enabled: true
+      register: true
+      prefer-ip-address: true
 
 springdoc:
   swagger-ui:
     urls:
       - name: consumer-service
         url: /consumer-service/v3/api-docs
-
 
 management:
   endpoints:
@@ -44,4 +62,3 @@ management:
   endpoint:
     health:
       show-details: always
-
